@@ -1,0 +1,50 @@
+body {
+  cursor: url('../img/crosshair.png') 32 32, crosshair;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.game-area {
+  background: url('../img/stage.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.lives {
+  position: fixed;
+  top: 10px;
+  left: 80%;
+  display: inline-block;
+}
+
+.lives-tittle {
+  float: left;
+  top: 0;
+  margin-right: 5px;
+}
+
+.score {
+  position: fixed;
+  left: 10px;
+  top: 85%;
+}
+
+i {
+  margin-top: 12px;
+}
+
+.red {
+  color: red;
+}
+
+.duck {
+  background: url('../img/sprites/blue_duck_1.png');
+  width: 100px;
+  height: 40px;
+  position: absolute;
+}

@@ -1,0 +1,50 @@
+Duck Hunt 
+El juego consiste en matar patos haciendo click sobre ellos para conseguir mas puntos que el rival. Para cada pato solo puedes hacer 3 disparos. En caso de seguir haciendo click no tendra ningun resultado. A los 3 disparos fallidos quedaras eliminado. 	
+
+Pantalla de inicio con breve explicacion y boton de Start
+
+El boton de star lanzara un metodo de la clase Game que se encargara de inicializar el juego.
+
+Clase Game:
+
+Sera la clase encargada de controlar el comienzo del juego, turnos, actualizar scores, controlar las vidas de los jugadores y finalizar el juego. En resumen, mediante esta clase controlaremos el juego llamando a metodos propios y de otra clase. 
+
+Clase Jugador: 
+
+Esta clase sera la encargada de guardar el score de cada jugador asi como las vidas restantes.
+
+Duck: 
+
+Esta clase se encargara de todo lo relacionado con los patos, por ejemplo, los pintara y borrara, comprobara si el pato ha muerto o no etc.
+
+
+Game:
+atts:
+turno-> 1 o 2 determinara los turnos(mirar codigo de miguel/papu);
+ganador -> determinara el ganador de la partida.
+
+StartGame();-> sera un metodo propio de la clase y inicializara el juego al instanciar Game;
+
+metodos:
+
+Jugador:
+Atts: Score, livesRemaining, totalLives,shotsRemaining;
+
+metodos:
+
+Duck:
+Atts -> 
+Tipo: Sera un entero entre 1 y X generado aleatoriamente y servira para tener distintos tipos de movimiento en el pato comprobando el tipo asignado a cada uno. 
+PositionX: Determinara la posicion X del pato.
+PositionY: Determinara la posicion Y del pato.
+isAlive: booleano que determinara cuando un pato a muerto o no. 
+
+
+
+Planificacion Semanal:
+Sabado/Domingo: Creacion de la estructura del proyecto, enlace a librerias y archivos necesarios y creacion de constructores/metodos.
+
+Lunes/Martes: Desarrollo de la lógica del juego, comprobaciones de scores, turnos, tiros realizados, vidas restantes etc y layout html.
+
+Miercoles/Jueves: Interactividad con el dom, eventos que hagan ejecutar la logica y dejarlo bonito/añadir sonido + deploy;
+
