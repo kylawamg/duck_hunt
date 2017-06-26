@@ -4,30 +4,13 @@ function Board(height, width) {
 
 }
 
-Board.prototype.updateDuckType1 = function(duck) {
 
-  var generateDuck = $('#duck');
-  console.log(generateDuck);
-  if (generateDuck.hasClass("up-right-blue-1")) {
-    generateDuck.addClass("up-right-blue-2");
-    generateDuck.removeClass("up-right-blue-1");
-
-  } else if (generateDuck.hasClass("up-right-blue-2")) {
-    generateDuck.addClass("up-right-blue-3");
-    generateDuck.removeClass("up-right-blue-2");
-
-  } else {
-    generateDuck.addClass("up-right-blue-1");
-    generateDuck.removeClass("up-right-blue-3");
-
-  }
-};
 Board.prototype.printDuck = function(duck) {
   var generateDuck = $('#duck');
   var top = $('#duck').position().top;
   var left = $('#duck').position().left;
   var speed = 18;
-  var speedOnDead = 22;
+  var speedOnDead = 28;
   var height = $(window).height();
   var width = $(window).width();
   var intervalId = setInterval(function() {
@@ -39,17 +22,22 @@ Board.prototype.printDuck = function(duck) {
         duck.positionX = left;
 
         if (generateDuck.hasClass("up-right-blue-1")) {
-          generateDuck.addClass("up-right-blue-2");
           generateDuck.removeClass("up-right-blue-1");
+          generateDuck.addClass("up-right-blue-2");
+
 
         } else if (generateDuck.hasClass("up-right-blue-2")) {
-          generateDuck.addClass("up-right-blue-3");
           generateDuck.removeClass("up-right-blue-2");
+          generateDuck.addClass("up-right-blue-3");
 
-        } else {
-          generateDuck.addClass("up-right-blue-1");
+
+        } else if(generateDuck.hasClass("up-right-blue-3")){
           generateDuck.removeClass("up-right-blue-3");
-
+          generateDuck.addClass("up-right-blue-1");
+        }else {
+          generateDuck.removeClass();
+          generateDuck.addClass("duck");
+          generateDuck.addClass("up-right-blue-1");
         }
         break;
       case 'E':
@@ -66,10 +54,14 @@ Board.prototype.printDuck = function(duck) {
           generateDuck.addClass("right-blue-3");
           generateDuck.removeClass("right-blue-2");
 
-        } else {
+        } else if(generateDuck.hasClass("right-blue3")){
           generateDuck.addClass("right-blue-1");
           generateDuck.removeClass("right-blue-3");
 
+        }else {
+          generateDuck.removeClass();
+          generateDuck.addClass("duck");
+          generateDuck.addClass("right-blue-1");
         }
 
         break;
@@ -87,10 +79,14 @@ Board.prototype.printDuck = function(duck) {
       generateDuck.addClass("up-right-blue-3");
       generateDuck.removeClass("up-right-blue-2");
 
-    } else {
+    } else if(generateDuck.hasClass("up-right-blue-3")){
       generateDuck.addClass("up-right-blue-1");
       generateDuck.removeClass("up-right-blue-3");
 
+    }else {
+      generateDuck.removeClass();
+      generateDuck.addClass("duck");
+      generateDuck.addClass("up-right-blue-1");
     }
 
     break;
@@ -108,10 +104,14 @@ Board.prototype.printDuck = function(duck) {
       generateDuck.addClass("up-left-blue-3");
       generateDuck.removeClass("up-left-blue-2");
 
-    } else {
+    } else if (generateDuck.hasClass("up-left-blue-3")){
       generateDuck.addClass("up-left-blue-1");
       generateDuck.removeClass("up-left-blue-3");
 
+    }else {
+      generateDuck.removeClass();
+      generateDuck.addClass("duck");
+      generateDuck.addClass("up-left-blue-1");
     }
     break;
     case 'W':
@@ -128,10 +128,13 @@ Board.prototype.printDuck = function(duck) {
       generateDuck.addClass("left-blue-3");
       generateDuck.removeClass("left-blue-2");
 
-    } else {
+    } else if(generateDuck.hasClass("left-blue-3")){
       generateDuck.addClass("left-blue-1");
       generateDuck.removeClass("left-blue-3");
-
+    }else {
+      generateDuck.removeClass();
+      generateDuck.addClass("duck");
+      generateDuck.addClass("left-blue-1");
     }
     break;
     case 'NW':
@@ -148,10 +151,14 @@ Board.prototype.printDuck = function(duck) {
       generateDuck.addClass("up-left-blue-3");
       generateDuck.removeClass("up-left-blue-2");
 
-    } else {
+    } else if(generateDuck.hasClass("up-left-blue-3")){
       generateDuck.addClass("up-left-blue-1");
       generateDuck.removeClass("up-left-blue-3");
 
+    }else {
+      generateDuck.removeClass();
+      generateDuck.addClass("duck");
+      generateDuck.addClass("up-left-blue-1");
     }
     break;
     case 'dead':

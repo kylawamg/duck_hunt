@@ -149,9 +149,11 @@ Duck.prototype.killDuck = function(isAlive) {
   var generateDuck = $('.duck').first();
 
   if (!this.isAlive) {
+
     generateDuck.removeClass();
     generateDuck.addClass('duck');
     generateDuck.addClass('shot-duck');
     this.direction = 'dead';
+    return true;
   }
 };
