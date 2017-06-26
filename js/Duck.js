@@ -108,50 +108,50 @@ Duck.prototype.generateType = function(type, generateDuck) {
       console.log("abajo derecha");
       break;
   }
-};
-Duck.prototype.move = function() {
-  var top = $('#duck').position().top;
-  var left = $('#duck').position().left;
-  var speed = 12;
-  var height = $(window).height();
-  var width =  $(window).width();
-  var intervalId = setInterval(function() {
-    switch (this.type) {
-      case 1:
-      if ((top < (height/2))&&(left < (width/2))) {
-        generateDuck.css('top', top += speed);
-        generateDuck.css('left', left += speed);
-        if(generateDuck.hasClass( "up-right-blue-1")){
-          generateDuck.addClass("up-right-blue-2");
-          generateDuck.removeClass("up-right-blue-1");
-
-        }else if (generateDuck.hasClass("up-right-blue-2")){
-          generateDuck.addClass("up-right-blue-3");
-          generateDuck.removeClass("up-right-blue-2");
-
-        }else {
-          generateDuck.addClass("up-right-blue-1");
-          generateDuck.removeClass("up-right-blue-3");
-
-        }
-
-      }else {
-    //    generateDuck.css('top', top -= speed);
-        generateDuck.css('left', left += speed);
-      }
-
-        break;
-      default:
-
-    }
-
-
-
-  }, 200);
-
 
 };
+
+
+
 
 Duck.prototype.generateRandomDirection = function() {
-  return Math.floor(Math.random() * 6) + 1;
+  var direction = Math.floor(Math.random() * 6) + 1;
+  switch (direction) {
+    case 1:
+      this.direction = 'SE';
+      this.type = 1;
+      break;
+    case 2:
+      this.direction = 'E';
+      this.type = 2;
+      break;
+    case 3:
+      this.direction = 'NE';
+      this.type = 3;
+      break;
+    case 4:
+      this.direction = 'SW';
+      this.type = 4;
+      break;
+    case 5:
+      this.direction = 'W';
+      this.type = 5;
+      break;
+    case 6:
+      this.direction = 'NW';
+      this.type = 6;
+      break;
+  }
+
+};
+
+Duck.prototype.killDuck = function(isAlive) {
+  var generateDuck = $('.duck').first();
+
+  if (!this.isAlive) {
+    generateDuck.removeClass();
+    generateDuck.addClass('duck');
+    generateDuck.addClass('shot-duck');
+    this.direction = 'dead';
+  }
 };

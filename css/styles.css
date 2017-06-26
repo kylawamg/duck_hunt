@@ -104,3 +104,11 @@ background-repeat: no-repeat;
   background: url('../img/sprites/blue_duck_11.png');
   background-repeat: no-repeat;
 }
+.shot-duck {
+  background: url('../img/sprites/blue_duck_7.png');
+  background-repeat: no-repeat;
+}
+.dead-duck {
+  background: url('../img/sprites/blue_duck_8.png');
+  background-repeat: no-repeat;
+}
