@@ -5,3 +5,7 @@ this.winner = "";
 this.changeTurn = "false";
 
 }
+
+Rules.prototype.changeTurn = function () {
+  this.turn = 'player2';
+};

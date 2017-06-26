@@ -4,6 +4,7 @@ body {
   padding: 0;
   width: 100vw;
   font-family: 'Press Start 2P', cursive;
+   overflow:hidden;
 }
 
 .game-area {
@@ -43,8 +44,63 @@ i {
 }
 
 .duck {
-  background: url('../img/sprites/blue_duck_1.png');
+/*  background: url('../img/sprites/blue_duck_1.png');*/
   width: 100px;
-  height: 40px;
+  height: 60px;
   position: absolute;
+}
+/*Clase con el primer background de la animacion hacia arriba*/
+.up-right-blue-1 {
+background: url('../img/sprites/blue_duck_3.png');
+background-repeat: no-repeat;
+}
+/*fondo 2 */
+.up-right-blue-2 {
+background: url('../img/sprites/blue_duck_4.png');
+background-repeat: no-repeat;
+}
+/*fondo 3*/
+.up-right-blue-3 {
+background: url('../img/sprites/blue_duck_5.png');
+background-repeat: no-repeat;
+}
+.right-blue-1{
+background: url('../img/sprites/blue_duck_1.png');
+background-repeat: no-repeat;
+}
+.right-blue-2 {
+background: url('../img/sprites/blue_duck_2.png');
+background-repeat: no-repeat;
+}
+.right-blue-3 {
+background: url('../img/sprites/blue_duck_3.png');
+background-repeat: no-repeat;
+}
+.left-blue-1{
+background: url('../img/sprites/blue_duck_12.png');
+background-repeat: no-repeat;
+}
+.left-blue-2 {
+background: url('../img/sprites/blue_duck_13.png');
+background-repeat: no-repeat;
+}
+.left-blue-3{
+background: url('../img/sprites/blue_duck_13.png');
+background-repeat: no-repeat;
+}
+
+/*Clase con el primer background de la animacion hacia arriba*/
+.up-left-blue-1 {
+background: url('../img/sprites/blue_duck_9.png');
+background-repeat: no-repeat;
+}
+/*fondo 2 */
+.up-left-blue-2 {
+background: url('../img/sprites/blue_duck_10.png');
+background-repeat: no-repeat;
+}
+/*fondo 3*/
+.up-left-blue-3 {
+  background: url('../img/sprites/blue_duck_11.png');
+  background-repeat: no-repeat;
 }
