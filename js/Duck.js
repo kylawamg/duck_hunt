@@ -5,22 +5,22 @@ function Duck() {
   this.isAlive = true;
   this.typeX = 0;
   this.typeY = 0;
-  this.direction = '';
+  this.direction = 'SE';
   this.generateNewDuck();
 }
 
 Duck.prototype.generateNewDuck = function() {
   this.isAlive = true;
   var ducks = $('.game-area').first();
-  ducks.append("<div class='duck' id='duck'></div>");
+  ducks.append("<div class='duck'></div>");
   var generateDuck = $('.duck').first();
-  generateDuck.css('left', this.generateRandomX());
-  generateDuck.css('top', this.generateRandomY());
+  generateDuck.css('left', this._generateRandomX());
+  generateDuck.css('top', this._generateRandomY());
   this.assignType(generateDuck);
 
 };
 
-Duck.prototype.generateRandomX = function() {
+Duck.prototype._generateRandomX = function() {
   var x = Math.floor(Math.random() * 2);
   var width = $(window).width();
   if (x === 1) {
@@ -32,7 +32,7 @@ Duck.prototype.generateRandomX = function() {
   return x;
 };
 
-Duck.prototype.generateRandomY = function() {
+Duck.prototype._generateRandomY = function() {
   var y = Math.floor(Math.random() * 3);
   var height = $(window).height();
 
@@ -49,6 +49,17 @@ Duck.prototype.generateRandomY = function() {
   return y;
 };
 
+Duck.prototype._checkBorders = function() {
+  var width = $(window).width();
+  var height = $(window).height();
+  var generateDuck = $('.duck').first();
+  if (this.positionX < 0 || this.positionY < 0) {
+      return true;
+  }else if (this.positionX > width || this.positionY > height) {
+    return true;
+  }
+return false;
+};
 Duck.prototype.assignType = function(generateDuck) {
   if (this.typeX === 1) {
     if (this.typeY === 1) {
@@ -79,9 +90,9 @@ Duck.prototype.assignType = function(generateDuck) {
       this.direction = 'NW';
     }
   }
-  this.generateType(this.type, generateDuck);
+  this._generateType(this.type, generateDuck);
 };
-Duck.prototype.generateType = function(type, generateDuck) {
+Duck.prototype._generateType = function(type, generateDuck) {
   switch (type) {
     case 1:
       generateDuck.addClass(" up-right-blue-1");

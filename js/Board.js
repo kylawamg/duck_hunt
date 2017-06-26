@@ -6,9 +6,9 @@ function Board(height, width) {
 
 
 Board.prototype.printDuck = function(duck) {
-  var generateDuck = $('#duck');
-  var top = $('#duck').position().top;
-  var left = $('#duck').position().left;
+  var generateDuck = $('.duck').first();
+  var top = $('.duck').first().position().top;
+  var left = $('.duck').first().position().left;
   var speed = 18;
   var speedOnDead = 28;
   var height = $(window).height();
