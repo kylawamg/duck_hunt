@@ -15,7 +15,7 @@
   </div>
   <div class="score">
     <h2>Score</h2>
-    <h2 id="points"> </h2>
+    <h2 id="points"> 0</h2>
   </div>
   <div class="lives">
     <h3 class="lives-tittle">Lives</h3>
@@ -36,20 +36,29 @@
     <div class="instructions hide">
       <h2>Instructions</h2>
       <p>You need to kill the maximum of ducks as possible with only 3 lives. </p>
-      <p>If you missed a shot you lost a life.</p>
+      <p>If you missed a shot you lost a live.</p>
       <a href="#" class="start" id="start-button">START !</a>
     </div>
     <div class="change-turn hide">
-      <h2>You lost all your lifes!</h2>
+      <h2>You lost all your lives!</h2>
       <p>Your score: <span class="scorep1"></span></p><br>
       <p>Player 2 press start</p>
-      <a href="#" class="start" id="start-button">START !</a>
+      <a href="#" class="start-turn" id="start-turn">START !</a>
     </div>
     <div class="finish-game hide">
-
+      <h2>Winner: <span class="player-winner"></span></h2>
+      <p>Score: </p><br>
+      <p class="score1">Player 1: </p>
+      <p class="score2">Player 2: </p>
+    </div>
+    <div class="finish-game-1 hide">
+      <h2>You lost all your lives!</h2>
+      <h2>Score: </h2>
+      <p class="score1">Player 1: </p>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="lib/ion.sound-3.0.7/ion.sound.min.js"></script>
   <script type="text/javascript" src="js/Duck.js"></script>
   <script type="text/javascript" src="js/Board.js"></script>
   <script type="text/javascript" src="js/Rules.js"></script>

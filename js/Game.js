@@ -9,73 +9,83 @@ var isDead = false;
 var numberOfDucks = 0;
 
 $(document).ready(function() {
-
+  var intervalID;
 });
 
 function updateDuck() {
+  if (duck.isAlive) {
+    intervalID = setInterval(function() {
+      board.printDuck(duck);
+      if (duck._checkBorders()) {
 
-  var intervalID = setInterval(function() {
-    board.printDuck(duck);
-    if (duck._checkBorders()) {
-      console.log("se ha salido el pajaro");
-      killDuck();
-    }
-  }, 100);
+        killDuck();
+
+      }
+    }, 100);
+  }
+  //Si el pato sigue vivo genera una direccion nueva a los 5s
   var timeoutId = setTimeout(function() {
+  //  console.log(duck.isAlive);
     if (duck.isAlive) {
 
       duck.generateRandomDirection();
     }
-  }, 5000);
-
-
+  }, 2000);
 }
 
 //Metodo que mata un pato cuando hacemos click en el.
 function killTheDuck() {
 
   event.stopPropagation();
+  rules.updateScore();
   duck.isAlive = false;
   duck.killDuck();
-  rules.updateScore();
+
   killDuck();
 }
-
 //Listener que resta vidas en caso de hacer click fuera del pajaro
+function clickOnBody() {
+  board.takeLife();
+  if (rules.checkLives()) {
+    if(rules.numberOfPlayers===2){
+      if (rules.isFirstPlayer()) {
+        $(".info").first().removeClass('hide');
+        $(".change-turn").first().removeClass('hide');
+        $(".scorep1").first().html(rules.score1);
+        clearInterval(intervalID);
 
-
-function clickOnBody (){
-
-      board.takeLife();
-      if(rules.checkLives()){
-        if (rules.turn == "player1"){
-          $(".info").first().removeClass('hide');
-          $(".change-turn").first().removeClass('hide');
-          $(".scorep1").first().html(rules.score1);
-        }
+      }else if (rules.isSecondPlayer()){
+        $(".info").first().removeClass('hide');
+        $(".finish-game").first().removeClass('hide');
+        rules.winner();
+        $(".player-winner").first().html(rules.winnerPlayer);
+        $(".score1").first().html(rules.score1);
+        $(".score2").first().html(rules.score2);
+      }
+    }else if (rules.numberOfPlayers===1){
+      $(".info").first().removeClass('hide');
+      $(".finish-game-1").first().removeClass('hide');
+        $(".score1").first().html(rules.score1);
+          clearInterval(intervalID);
     }
+
+  }
 }
-
-
 function killDuck() {
-
   if (duck.isAlive) {
     duck.isAlive = false;
     var timeoutIdDuck = setTimeout(function() {
       $('.duck').remove();
       duck = new Duck();
       duck.generateNewDuck();
-          $('.duck').on('click', killTheDuck);
-      console.log(duck.isAlive);
+      $('.duck').on('click', killTheDuck);
+      //console.log(duck.isAlive);
+      clearInterval(intervalID);
       updateDuck();
 
     }, 3000);
   }
 }
-//Cuando hacemos click en un pato llamamos a killTheDuck
-
-//$(document).on('click', '.duck', killTheDuck);
-
 //Event listener para el menu de inicio.
 $('.choose-player').on('click', function() {
   event.stopPropagation();
@@ -91,11 +101,53 @@ $('.choose-player').on('click', function() {
 //Event listener para el boton de Start
 $('.start').on('click', function() {
   event.stopPropagation();
+  startGame();
+
+});
+$('.start-turn').on('click', function() {
+  event.stopPropagation();
+
+  startTurn();
+
+});
+
+function startGame() {
   $(".instructions").first().addClass('hide');
   $(".info").first().addClass('hide');
   $('body').on('click', clickOnBody);
   duck.generateNewDuck();
   $('.duck').on('click', killTheDuck);
   setTimeout(updateDuck(), 2000);
+}
 
-});
+
+function startTurn() {
+  clearInterval(intervalID);
+  rules.turn = 'player2';
+    rules.score2 = 0;
+  rules.remainingLives = 3;
+  board.putLifes();
+
+  $('#points').html('0');
+  duck = new Duck();
+  duck.generateNewDuck();
+  $('.duck').on('click', killTheDuck);
+  $(".change-turn").first().addClass('hide');
+  $(".info").first().addClass('hide');
+  setTimeout(updateDuck(), 2000);
+  //console.log(rules);
+}
+
+function loadSounds() {
+  ion.sound({
+    sounds: [{
+      name: "snap"
+    }, {
+      name: "tap"
+    }],
+
+    path: "../lib/ion.sound-3.0.7/sounds/",
+    preload: true,
+    volume: 1.0
+  });
+}

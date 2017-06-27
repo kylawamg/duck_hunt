@@ -2,7 +2,7 @@ function Rules(){
 this.turn = 'player1';
 this.numberOfPlayers = 0;
 this.missedShots = 0;
-this.winner = "";
+this.winnerPlayer = "";
 this.changeTurn = "false";
 this.startedLives = 3;
 this.remainingLives = 3;
@@ -10,45 +10,50 @@ this.score1 = 0;
 this.score2 = 0;
 }
 
+Rules.prototype.isFirstPlayer = function(){
+  return this.turn == 'player1';
+};
+Rules.prototype.isSecondPlayer = function(){
+  return this.turn == 'player2';
+};
 Rules.prototype.changeTurn = function () {
   this.turn = 'player2';
 };
+Rules.prototype.winner = function () {
+    if (this.score1 > this.score2) {
+      this.winnerPlayer = 'Player 1';
+    }else if (this.score1 < this.score2){
+      this.winnerPlayer = 'Player 2';
+    }else {
+      this.winnerPlayer = 'Empate';
+    }
+};
 
 Rules.prototype.checkLives = function () {
-  console.log(this.remainingLives);
+
   this.remainingLives--;
   if (this.remainingLives <=0) {
-    if (this.turn == "player1") {
-        console.log("Cambio de turno no te quedan vidas");
-      
-
-    }else {
-      this.turn = "finish";
-    }
 
     return true;
-  }
-  else {
-    return false;
-  }
+    }
+
 };
 
 Rules.prototype.updateScore = function () {
 
   if (this.turn === 'player1') {
     this.score1 += 100;
-  }else {
+  }else if(this.turn == 'player2'){
     this.score2+=100;
   }
   this.printScore();
 };
 
 Rules.prototype.printScore = function () {
-  var score;
   if (this.turn === 'player1') {
-     score = $('#points').html(this.score1);
-  }else{
-     score = $('#points').html(this.score2);
+     $('#points').html(this.score1);
+  }else if (this.turn === 'player2'){
+       $('#points').html(this.score2);
   }
 
 };

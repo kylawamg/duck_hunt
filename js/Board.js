@@ -9,7 +9,7 @@ Board.prototype.printDuck = function(duck) {
   var generateDuck = $('.duck').first();
   var top = $('.duck').first().position().top;
   var left = $('.duck').first().position().left;
-  var speed = 10;
+  var speed = 20;
   var speedOnDead = 20;
   var height = $(window).height();
   var width = $(window).width();
@@ -177,4 +177,7 @@ Board.prototype.printDuck = function(duck) {
 Board.prototype.takeLife = function(){
     var heart = $('.red').last();
     heart.removeClass('red');
+};
+Board.prototype.putLifes = function () {
+  $('.lives').find('.fa').addClass('red');
 };

@@ -122,9 +122,6 @@ Duck.prototype._generateType = function(type, generateDuck) {
 
 };
 
-
-
-
 Duck.prototype.generateRandomDirection = function() {
   var direction = Math.floor(Math.random() * 6) + 1;
   switch (direction) {
@@ -168,7 +165,4 @@ Duck.prototype.killDuck = function(isAlive) {
     this.isAlive = true;
     return true;
   }
-};
-Duck.prototype.removeDuck = function () {
-
 };
