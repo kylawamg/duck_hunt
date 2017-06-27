@@ -10,6 +10,8 @@ var numberOfDucks = 0;
 
 $(document).ready(function() {
   var intervalID;
+  var audio = new Audio('sounds/intro1.mp3');
+  audio.play();
 });
 
 function updateDuck() {
@@ -31,11 +33,14 @@ function updateDuck() {
       duck.generateRandomDirection();
     }
   }, 2000);
+  
 }
+
 
 //Metodo que mata un pato cuando hacemos click en el.
 function killTheDuck() {
-
+  var audio = new Audio('sounds/cuack.mp3');
+  audio.play();
   event.stopPropagation();
   rules.updateScore();
   duck.isAlive = false;
@@ -45,8 +50,12 @@ function killTheDuck() {
 }
 //Listener que resta vidas en caso de hacer click fuera del pajaro
 function clickOnBody() {
+  var audio = new Audio('sounds/shot.mp3');
+  audio.play();
   board.takeLife();
   if (rules.checkLives()) {
+    var audio1 = new Audio('sounds/failed.mp3');
+    audio1.play();
     if(rules.numberOfPlayers===2){
       if (rules.isFirstPlayer()) {
         $(".info").first().removeClass('hide');
@@ -136,18 +145,4 @@ function startTurn() {
   $(".info").first().addClass('hide');
   setTimeout(updateDuck(), 2000);
   //console.log(rules);
-}
-
-function loadSounds() {
-  ion.sound({
-    sounds: [{
-      name: "snap"
-    }, {
-      name: "tap"
-    }],
-
-    path: "../lib/ion.sound-3.0.7/sounds/",
-    preload: true,
-    volume: 1.0
-  });
 }
