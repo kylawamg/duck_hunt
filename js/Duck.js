@@ -6,7 +6,7 @@ function Duck() {
   this.typeX = 0;
   this.typeY = 0;
   this.direction = 'SE';
-  //this.generateNewDuck();
+
 }
 
 Duck.prototype.generateNewDuck = function() {
@@ -35,7 +35,6 @@ Duck.prototype._generateRandomX = function() {
 Duck.prototype._generateRandomY = function() {
   var y = Math.floor(Math.random() * 3);
   var height = $(window).height();
-
   if (y === 1) {
     y = height - 200;
     this.typeY = 3;
@@ -45,7 +44,6 @@ Duck.prototype._generateRandomY = function() {
   } else {
     this.typeY = 1;
   }
-
   return y;
 };
 
@@ -55,8 +53,15 @@ Duck.prototype._checkBorders = function() {
   var generateDuck = $('.duck').first();
   if (this.positionX < -60 || this.positionY < -100) {
       return true;
-  }else if (this.positionX > width-100 || this.positionY > height-100) {
+  }else if (this.positionX > width-100) {
     return true;
+  }else if (this.positionY > height-200 && this.isAlive){
+      this.generateRandomDirection();
+    while (this.direction == 'SE' || this.direction == 'SW') {
+        this.generateRandomDirection();
+    }
+
+    return false;
   }
 return false;
 };
@@ -150,14 +155,11 @@ Duck.prototype.generateRandomDirection = function() {
       this.type = 6;
       break;
   }
-
 };
 
 Duck.prototype.killDuck = function(isAlive) {
   var generateDuck = $('.duck').first();
-
   if (!this.isAlive) {
-
     generateDuck.removeClass();
     generateDuck.addClass('duck');
     generateDuck.addClass('shot-duck');

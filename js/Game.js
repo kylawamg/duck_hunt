@@ -1,7 +1,6 @@
 var height = $(window).height();
 var width = $(window).width();
 var duck = new Duck();
-
 var ducks = [];
 var board = new Board(height, width);
 var rules = new Rules();
@@ -13,17 +12,14 @@ $(document).ready(function() {
   var audio = new Audio('sounds/intro1.mp3');
   audio.play();
 });
-
 function updateDuck() {
   if (duck.isAlive) {
     intervalID = setInterval(function() {
       board.printDuck(duck);
       if (duck._checkBorders()) {
-
         killDuck();
-
       }
-    }, 100);
+    }, 80);
   }
   //Si el pato sigue vivo genera una direccion nueva a los 5s
   var timeoutId = setTimeout(function() {
@@ -33,9 +29,7 @@ function updateDuck() {
       duck.generateRandomDirection();
     }
   }, 2000);
-  
 }
-
 
 //Metodo que mata un pato cuando hacemos click en el.
 function killTheDuck() {
@@ -70,14 +64,15 @@ function clickOnBody() {
         $(".player-winner").first().html(rules.winnerPlayer);
         $(".score1").first().html(rules.score1);
         $(".score2").first().html(rules.score2);
+        clearInterval(intervalID);
       }
     }else if (rules.numberOfPlayers===1){
       $(".info").first().removeClass('hide');
       $(".finish-game-1").first().removeClass('hide');
-        $(".score1").first().html(rules.score1);
+      console.log(rules.score1);
+        $(".scorepp1").first().html(rules.score1);
           clearInterval(intervalID);
     }
-
   }
 }
 function killDuck() {
@@ -91,7 +86,6 @@ function killDuck() {
       //console.log(duck.isAlive);
       clearInterval(intervalID);
       updateDuck();
-
     }, 3000);
   }
 }
@@ -106,18 +100,14 @@ $('.choose-player').on('click', function() {
   $(".game-start").first().addClass('hide');
   $(".instructions").first().removeClass('hide');
 });
-
 //Event listener para el boton de Start
 $('.start').on('click', function() {
   event.stopPropagation();
   startGame();
-
 });
 $('.start-turn').on('click', function() {
   event.stopPropagation();
-
   startTurn();
-
 });
 
 function startGame() {
@@ -129,14 +119,12 @@ function startGame() {
   setTimeout(updateDuck(), 2000);
 }
 
-
 function startTurn() {
   clearInterval(intervalID);
   rules.turn = 'player2';
     rules.score2 = 0;
   rules.remainingLives = 3;
   board.putLifes();
-
   $('#points').html('0');
   duck = new Duck();
   duck.generateNewDuck();
@@ -144,5 +132,4 @@ function startTurn() {
   $(".change-turn").first().addClass('hide');
   $(".info").first().addClass('hide');
   setTimeout(updateDuck(), 2000);
-  //console.log(rules);
 }
