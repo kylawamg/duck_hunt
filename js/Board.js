@@ -9,11 +9,11 @@ Board.prototype.printDuck = function(duck) {
   var generateDuck = $('.duck').first();
   var top = $('.duck').first().position().top;
   var left = $('.duck').first().position().left;
-  var speed = 18;
-  var speedOnDead = 28;
+  var speed = 10;
+  var speedOnDead = 20;
   var height = $(window).height();
   var width = $(window).width();
-  var intervalId = setInterval(function() {
+  //var intervalId = setInterval(function() {
     switch (duck.direction) {
       case 'SE':
         generateDuck.css('top', top += speed);
@@ -171,7 +171,7 @@ Board.prototype.printDuck = function(duck) {
 
     break;
     }
-  }, 200);
+//  }, 200);
 };
 
 Board.prototype.takeLife = function(){

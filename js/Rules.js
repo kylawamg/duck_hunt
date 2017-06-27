@@ -1,5 +1,6 @@
 function Rules(){
 this.turn = 'player1';
+this.numberOfPlayers = 0;
 this.missedShots = 0;
 this.winner = "";
 this.changeTurn = "false";
@@ -15,12 +16,14 @@ Rules.prototype.changeTurn = function () {
 
 Rules.prototype.checkLives = function () {
   console.log(this.remainingLives);
-  rules.remainingLives--;
-  if (this.remainingLives <0) {
+  this.remainingLives--;
+  if (this.remainingLives <=0) {
     if (this.turn == "player1") {
         console.log("Cambio de turno no te quedan vidas");
+      
+
     }else {
-      console.log("juego acabado");
+      this.turn = "finish";
     }
 
     return true;

@@ -1,68 +1,101 @@
-
 var height = $(window).height();
-var width =  $(window).width();
+var width = $(window).width();
 var duck = new Duck();
 
 var ducks = [];
-var board = new Board (height,width);
-var rules = new Rules ();
+var board = new Board(height, width);
+var rules = new Rules();
 var isDead = false;
 var numberOfDucks = 0;
-// A $( document ).ready() block.
-$( document ).ready(function() {
-var count=0;
-    console.log( "ready!" );
 
-  //var intervalDucks = setInterval(new Duck(), 6*1000);
-  updateDuck();
-  var intervalID = setInterval(function(){
-
-      if (duck._checkBorders()) {
-        killTheDuck();
-      }
-
-
-  }, 100);
+$(document).ready(function() {
 
 });
 
-function updateDuck(){
- var intervalID = setInterval(board.printDuck(duck), 100);
-  var timeoutId = setTimeout(function(){
+function updateDuck() {
+
+  var intervalID = setInterval(function() {
+    board.printDuck(duck);
+    if (duck._checkBorders()) {
+      console.log("se ha salido el pajaro");
+      killDuck();
+    }
+  }, 100);
+  var timeoutId = setTimeout(function() {
     if (duck.isAlive) {
+
       duck.generateRandomDirection();
     }
   }, 5000);
 
 
 }
-function killTheDuck (){
-  event.stopPropagation();
-  if (duck.isAlive) {
 
+//Metodo que mata un pato cuando hacemos click en el.
+function killTheDuck() {
+
+  event.stopPropagation();
+  duck.isAlive = false;
+  duck.killDuck();
+  rules.updateScore();
+  killDuck();
+}
+
+//Listener que resta vidas en caso de hacer click fuera del pajaro
+
+
+function clickOnBody (){
+
+      board.takeLife();
+      if(rules.checkLives()){
+        if (rules.turn == "player1"){
+          $(".info").first().removeClass('hide');
+          $(".change-turn").first().removeClass('hide');
+          $(".scorep1").first().html(rules.score1);
+        }
+    }
+}
+
+
+function killDuck() {
+
+  if (duck.isAlive) {
     duck.isAlive = false;
-    duck.killDuck();
-    rules.updateScore();
-    var timeoutIdDuck = setTimeout (function (){
+    var timeoutIdDuck = setTimeout(function() {
       $('.duck').remove();
       duck = new Duck();
-
-      $('.duck').on('click', killTheDuck);
-
+      duck.generateNewDuck();
+          $('.duck').on('click', killTheDuck);
       console.log(duck.isAlive);
       updateDuck();
 
-    },5000);
-
+    }, 3000);
+  }
 }
-}
+//Cuando hacemos click en un pato llamamos a killTheDuck
 
-$('body').on('click', function(){
-console.log("click on body");
-if(!rules.checkLives()){
-  board.takeLife();
-}
+//$(document).on('click', '.duck', killTheDuck);
 
+//Event listener para el menu de inicio.
+$('.choose-player').on('click', function() {
+  event.stopPropagation();
+  if (this.id == "one-player") {
+    rules.numberOfPlayers = 1;
+  } else if (this.id == "two-player") {
+    rules.numberOfPlayers = 2;
+  }
+  $(".game-start").first().addClass('hide');
+  $(".instructions").first().removeClass('hide');
 });
 
-$('.duck').on('click', killTheDuck);
+//Event listener para el boton de Start
+$('.start').on('click', function() {
+  event.stopPropagation();
+  $(".instructions").first().addClass('hide');
+  $(".info").first().addClass('hide');
+  $('body').on('click', clickOnBody);
+  duck.generateNewDuck();
+  $('.duck').on('click', killTheDuck);
+  setTimeout(updateDuck(), 2000);
+
+});

@@ -6,7 +6,7 @@ function Duck() {
   this.typeX = 0;
   this.typeY = 0;
   this.direction = 'SE';
-  this.generateNewDuck();
+  //this.generateNewDuck();
 }
 
 Duck.prototype.generateNewDuck = function() {
@@ -53,9 +53,9 @@ Duck.prototype._checkBorders = function() {
   var width = $(window).width();
   var height = $(window).height();
   var generateDuck = $('.duck').first();
-  if (this.positionX < 0 || this.positionY < 0) {
+  if (this.positionX < -60 || this.positionY < -100) {
       return true;
-  }else if (this.positionX > width || this.positionY > height) {
+  }else if (this.positionX > width-100 || this.positionY > height-100) {
     return true;
   }
 return false;
@@ -165,6 +165,10 @@ Duck.prototype.killDuck = function(isAlive) {
     generateDuck.addClass('duck');
     generateDuck.addClass('shot-duck');
     this.direction = 'dead';
+    this.isAlive = true;
     return true;
   }
+};
+Duck.prototype.removeDuck = function () {
+
 };
