@@ -10,20 +10,33 @@ $(document).ready(function() {
   var intervalID;
   var audio = new Audio('sounds/intro1.mp3');
   audio.play();
+
+
+  $('.start').on('click', function() {
+    startGame();
+    event.stopPropagation();
+  });
+  $('.start-turn').on('click', function() {
+    startTurn();
+    event.stopPropagation();
+  });
 });
+
 function updateDuck() {
   if (duck.isAlive) {
     intervalID = setInterval(function() {
-      board.printDuck(duck);
-      if (duck._checkBorders()) {
-        killDuck();
+      if (duck.isAlive) {
+        board.printDuck(duck);
+        if (duck._checkBorders()) {
+          killDuck();
       }
-
+    }else {
+        board.printDuck(duck);
+    }
     }, 80);
   }
   var timeoutId = setTimeout(function() {
     if (duck.isAlive) {
-
       duck.generateRandomDirection();
     }
   }, 2000);
@@ -31,12 +44,11 @@ function updateDuck() {
 function killTheDuck() {
   var audio = new Audio('sounds/cuack.mp3');
   audio.play();
-  rules.ducksKilled++;
-  event.stopPropagation();
-  rules.updateScore();
   duck.isAlive = false;
+  rules.updateScore();
   duck.killDuck();
   killDuck();
+  event.stopPropagation();
 }
 
 function clickOnBody() {
@@ -44,15 +56,18 @@ function clickOnBody() {
   audio.play();
   board.takeLife();
   if (rules.checkLives()) {
+    clearInterval(intervalID);
+      $('.duck').remove();
+    duck = null;
     var audio1 = new Audio('sounds/failed.mp3');
     audio1.play();
+    $("body").unbind("click");
+    $(".duck").unbind("click");
     if(rules.numberOfPlayers===2){
       if (rules.isFirstPlayer()) {
         $(".info").first().removeClass('hide');
         $(".change-turn").first().removeClass('hide');
         $(".scorep1").first().html(rules.score1);
-        rules.changeTurn();
-        clearInterval(intervalID);
       }else if (rules.isSecondPlayer()){
         $(".info").first().removeClass('hide');
         $(".finish-game").first().removeClass('hide');
@@ -60,14 +75,11 @@ function clickOnBody() {
         $(".player-winner").first().html(rules.winnerPlayer);
         $(".score1").first().html(rules.score1);
         $(".score2").first().html(rules.score2);
-        clearInterval(intervalID);
       }
     }else if (rules.numberOfPlayers===1){
       $(".info").first().removeClass('hide');
       $(".finish-game-1").first().removeClass('hide');
-      console.log(rules.score1);
-        $(".scorepp1").first().html(rules.score1);
-          clearInterval(intervalID);
+      $(".scorepp1").first().html(rules.score1);
     }
   }
 }
@@ -97,14 +109,7 @@ $('.choose-player').on('click', function() {
   $(".instructions").first().removeClass('hide');
 });
 
-$('.start').on('click', function() {
-  event.stopPropagation();
-  startGame();
-});
-$('.start-turn').on('click', function() {
-  event.stopPropagation();
-  startTurn();
-});
+
 function startGame() {
   $(".instructions").first().addClass('hide');
   $(".info").first().addClass('hide');
@@ -123,6 +128,7 @@ function startTurn() {
   duck = new Duck();
   duck.generateNewDuck();
   $('.duck').on('click', killTheDuck);
+  $('body').on('click', clickOnBody);
   $(".change-turn").first().addClass('hide');
   $(".info").first().addClass('hide');
   setTimeout(updateDuck(), 2000);
