@@ -1,17 +1,14 @@
 var height = $(window).height();
 var width = $(window).width();
-var duck = new Duck();
-var ducks = [];
 var board = new Board(height, width);
 var rules = new Rules();
 var isDead = false;
-var duck1;
+var count = 0;
 $(document).ready(function() {
   var intervalID;
+
   var audio = new Audio('sounds/intro1.mp3');
   audio.play();
-
-
   $('.start').on('click', function() {
     startGame();
     event.stopPropagation();
@@ -20,18 +17,19 @@ $(document).ready(function() {
     startTurn();
     event.stopPropagation();
   });
+  $('.restart').on('click', function() {
+    restartGame();
+    event.stopPropagation();
+  });
 });
-
 function updateDuck() {
   if (duck.isAlive) {
     intervalID = setInterval(function() {
-      if (duck.isAlive) {
+
         board.printDuck(duck);
         if (duck._checkBorders()) {
           killDuck();
-      }
-    }else {
-        board.printDuck(duck);
+
     }
     }, 80);
   }
@@ -44,6 +42,7 @@ function updateDuck() {
 function killTheDuck() {
   var audio = new Audio('sounds/cuack.mp3');
   audio.play();
+  $(".duck").unbind("click");
   duck.isAlive = false;
   rules.updateScore();
   duck.killDuck();
@@ -109,27 +108,49 @@ $('.choose-player').on('click', function() {
   $(".instructions").first().removeClass('hide');
 });
 
-
 function startGame() {
+  if (count !==0) {
+      clearInterval(intervalID);
+      duck = null;
+      $('.duck').remove();
+  }
   $(".instructions").first().addClass('hide');
   $(".info").first().addClass('hide');
   $('body').on('click', clickOnBody);
-  duck.generateNewDuck();
-  $('.duck').on('click', killTheDuck);
-  setTimeout(updateDuck(), 2000);
-}
-function startTurn() {
-  clearInterval(intervalID);
-  rules.turn = 'player2';
-    rules.score2 = 0;
-  rules.remainingLives = 3;
-  board.putLifes();
-  $('#points').html('0');
   duck = new Duck();
   duck.generateNewDuck();
   $('.duck').on('click', killTheDuck);
-  $('body').on('click', clickOnBody);
+    $('#points').html('0');
+  setTimeout(updateDuck(), 2000);
+  count++;
+}
+function startTurn() {
+  restarParameters();
+  rules.turn = 'player2';
+  rules.score2 = 0;
   $(".change-turn").first().addClass('hide');
   $(".info").first().addClass('hide');
-  setTimeout(updateDuck(), 2000);
+  $('.duck').on('click', killTheDuck);
+  $('body').on('click', clickOnBody);
+
 }
+function restartGame () {
+  rules.turn='player1';
+  rules.score2 = 0;
+  rules.score1 = 0;
+  restarParameters();
+  $(".finish-game-1").first().addClass('hide');
+    $(".finish-game").first().addClass('hide');
+  $(".game-start").first().removeClass('hide');
+  $(".info").first().removeClass('hide');
+
+
+}
+function restarParameters () {
+    clearInterval(intervalID);
+    $('#points').html('0');
+    rules.remainingLives = 3;
+    board.putLifes();
+    duck = new Duck();
+    duck.generateNewDuck();
+    setTimeout(updateDuck(), 2000);}
